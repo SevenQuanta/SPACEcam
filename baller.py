@@ -11,6 +11,25 @@ import cv2
 import imutils
 import time
 import threading
+from px_2_xyz import px_2_xyz
+from Camera import Camera
+
+global x1
+global x2
+global y1
+global y2
+global global_cam
+
+global_cam = Camera("webcam", "webcam", 1.172)
+
+class coordinatePoint():
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+coordinate1 = coordinatePoint(0,0)
+coordinate2 = coordinatePoint(0,0)
+
 
 class camThread(threading.Thread):
     def __init__(self, previewName, camID):
@@ -89,6 +108,14 @@ def camTrack(previewName, camID):
             # centroid
             c = max(cnts, key=cv2.contourArea)
             ((x, y), radius) = cv2.minEnclosingCircle(c)
+            if previewName == "Camera 1":
+                coordinate1.x = x
+                coordinate1.y = y
+                #print("x1: %d y1: %d x2: " % (x1, y1))
+            elif previewName == "Camera 2":
+                coordinate2.x = x
+                coordinate2.y = y
+               # print("x2: %d y2: %d" % (x2, y2))
             M = cv2.moments(c)
             center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
 
@@ -135,7 +162,14 @@ def camTrack(previewName, camID):
     cv2.destroyAllWindows()
 
 
-thread1 = camThread("Camera 1", 0)
-thread2 = camThread("Camera 2", 1)
+thread1 = camThread("Camera 1", 1)
+thread2 = camThread("Camera 2", 2)
 thread1.start()
 thread2.start()
+
+
+for i in range(100):
+    coords = px_2_xyz(coordinate1.x, coordinate1.y, coordinate2.x, coordinate2.y, global_cam)
+    time.sleep(.1)
+    #rint("x1: %d y1: %d x2: %d y2: %d" % (coordinate1.x, coordinate1.y, coordinate2.x, coordinate2.y))
+    print("x: %d y: %d z: %d" % (coords[0][0], coords[0][1], coords[0][2]) )

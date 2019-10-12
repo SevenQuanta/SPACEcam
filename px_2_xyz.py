@@ -22,6 +22,6 @@ import numpy as np
 #    and each row represents one instant in time
     
 
-def px_2_xyx(x1,y1,x2,y2,cam):
+def px_2_xy(x1,y1,x2,y2,cam):
 	pass
 	
