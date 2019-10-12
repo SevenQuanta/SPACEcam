@@ -1,4 +1,6 @@
 import numpy as np
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm
 import matplotlib.pyplot as plt
 
 def epsilon(x0,phi1,phi2,theta1,theta2,params):
@@ -55,13 +57,35 @@ def rays(r,t,phi1,phi2,theta1,theta2,params):
 
 def plot_rays(r,t,phi1,phi2,theta1,theta2,params):
 	
-	rayR, rayT = rays(r,t,phi1,phi2,theta1,theta2,params)
+	fig = plt.figure()
+	ax = fig.gca(projection='3d')
 	
-	fig = plt.figure(1)
-	ax = fig.add_subplot(111, projection='3d')
-	ax.plot(rayR[:,0],rayR[:,1],rayR[:,2])
-	ax.plot(rayT[:,0],rayT[:,1],rayT[:,2])
-	ax.set_xlabel('x')
-	ax.set_ylabel('y')
-	ax.set_zlabel('z')
-	ax.legend(['cam1','cam2'])
+	def equal_plot(X,Y,Z):
+
+		ax.plot(X,Y,Z)
+		
+		max_range = np.array([X.max()-X.min(), Y.max()-Y.min(), Z.max()-Z.min()]).max()
+		Xb = 0.5*max_range*np.mgrid[-1:2:2,-1:2:2,-1:2:2][0].flatten() + 0.5*(X.max()+X.min())
+		Yb = 0.5*max_range*np.mgrid[-1:2:2,-1:2:2,-1:2:2][1].flatten() + 0.5*(Y.max()+Y.min())
+		Zb = 0.5*max_range*np.mgrid[-1:2:2,-1:2:2,-1:2:2][2].flatten() + 0.5*(Z.max()+Z.min())
+		# Comment or uncomment following both lines to test the fake bounding box:
+		for xb, yb, zb in zip(Xb, Yb, Zb):
+		   ax.plot([xb], [yb], [zb], 'w')
+	
+	rayR, rayT = rays(r,t,phi1,phi2,theta1,theta2,params)
+
+	X = rayR[:,0]
+	Y = rayR[:,1]
+	Z = rayR[:,2]
+	equal_plot(X,Y,Z,1)
+	
+	X = rayT[:,0]
+	Y = rayT[:,1]
+	Z = rayT[:,2]
+	equal_plot(X,Y,Z,1)
+	
+	
+	
+	
+	
+	
