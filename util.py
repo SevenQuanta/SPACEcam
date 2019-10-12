@@ -77,12 +77,14 @@ def plot_rays(r,t,phi1,phi2,theta1,theta2,params):
 	X = rayR[:,0]
 	Y = rayR[:,1]
 	Z = rayR[:,2]
-	equal_plot(X,Y,Z,1)
+	equal_plot(X,Y,Z)
 	
 	X = rayT[:,0]
 	Y = rayT[:,1]
 	Z = rayT[:,2]
-	equal_plot(X,Y,Z,1)
+	equal_plot(X,Y,Z)
+	
+	ax.scatter(X[0],Y[0],Z[0]
 	
 	
 	
