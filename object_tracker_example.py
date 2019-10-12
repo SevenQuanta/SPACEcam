@@ -18,10 +18,11 @@ args = vars(ap.parse_args())
  
 # if we are using OpenCV 3.2 OR BEFORE, we can use a special factory
 # function to create our object tracker
+"""
 print(int(major))
 print(int(minor))
-if int(major) == 4 and int(minor) < 3:
-	tracker = cv2.Tracker_create(args["tracker"].upper())
+if int(major) == 3 and int(minor) < 3:
+	tracker1 = cv2.Tracker(args["tracker"].upper())
  
 # otherwise, for OpenCV 3.3 OR NEWER, we need to explicity call the
 # approrpiate object tracker constructor:
@@ -37,10 +38,13 @@ else:
 		"medianflow": cv2.TrackerMedianFlow_create,
 		"mosse": cv2.TrackerMOSSE_create
 	}
- 
+
 	# grab the appropriate object tracker using our dictionary of
 	# OpenCV object tracker objects
 	tracker = OPENCV_OBJECT_TRACKERS[args["tracker"]]()
+	"""
+tracker1 = cv2.TrackerKCF_create
+tracker2 = cv2.TrackerKCF_create
  
 # initialize the bounding box coordinates of the object we are going
 # to track
@@ -49,24 +53,28 @@ initBB = None
 # if a video path was not supplied, grab the reference to the web cam
 if not args.get("video", False):
 	print("[INFO] starting video stream...")
-	vs = VideoStream(src=0).start()
+	vs1 = VideoStream(src=1).start()
+	vs2 = VideoStream(src=2).start()
 	time.sleep(1.0)
 
 # otherwise, grab a reference to the video file
 else:
-	vs = cv2.VideoCapture(args["video"])
+	vs1 = cv2.VideoCapture(args["video"])
+	vs2 = cv2.VideoCapture(args["video"])
 
 # initialize the FPS throughput estimator
 fps = None
 # if a video path was not supplied, grab the reference to the web cam
 if not args.get("video", False):
 	print("[INFO] starting video stream...")
-	vs = VideoStream(src=0).start()
+	vs1 = VideoStream(src=1).start()
+	vs2 = VideoStream(src=2).start()
 	time.sleep(1.0)
  
 # otherwise, grab a reference to the video file
 else:
-	vs = cv2.VideoCapture(args["video"])
+	vs1 = cv2.VideoCapture(args["video"])
+	vs2 = cv2.VideoCapture(args["video"])
  
 # initialize the FPS throughput estimator
 fps = None
@@ -75,22 +83,28 @@ fps = None
 while True:
 	# grab the current frame, then handle if we are using a
 	# VideoStream or VideoCapture object
-	frame = vs.read()
-	frame = frame[1] if args.get("video", False) else frame
+	frame1 = vs1.read()
+	frame1 = frame1[1] if args.get("video", False) else frame1
+	frame2 = vs2.read()
+	frame2 = frame2[1] if args.get("video", False) else frame2
  
 	# check to see if we have reached the end of the stream
-	if frame is None:
+	if frame1 is None or frame2 is None:
 		break
  
 	# resize the frame (so we can process it faster) and grab the
 	# frame dimensions
-	frame = imutils.resize(frame, width=500)
-	(H, W) = frame.shape[:2]
+	frame1 = imutils.resize(frame1, width=500)
+	frame2 = imutils.resize(frame2, width=500)
+	(H, W) = frame1.shape[:2]
+	(H, W) = frame2.shape[:2]
 
     # check to see if we are currently tracking an object
 	if initBB is not None:
 		# grab the new bounding box coordinates of the object
-		(success, box) = tracker.update(frame)
+		(success1, box1) = tracker.update(frame1)
+		(success2, box2) = tracker.update(frame2)
+
  
 		# check to see if the tracking was a success
 		if success:
@@ -133,3 +147,5 @@ while True:
 		# coordinates, then start the FPS throughput estimator as well
 		tracker.init(frame, initBB)
 		fps = FPS().start()
+	if key == ord("p"):
+		break
