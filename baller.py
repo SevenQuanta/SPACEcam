@@ -135,7 +135,11 @@ def camTrack(previewName, camID):
     cv2.destroyAllWindows()
 
 
-thread1 = camThread("Camera 1", 0)
-thread2 = camThread("Camera 2", 1)
-thread1.start()
-thread2.start()
+def main():
+    thread1 = camThread("Camera 1", 0)
+    thread2 = camThread("Camera 2", 1)
+    thread1.start()
+    thread2.start()
+    
+if __name__ == "__main__":
+    main()
