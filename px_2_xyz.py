@@ -68,10 +68,10 @@ def px_2_xyz(x1,y1,x2,y2,cam):
 	
 	#doing some plotting
 	
-	r = np.linspace(0,1,101)
-	t = np.linspace(0,1,101)
-	
-	plot_rays(r,t,phi1,phi2,theta1,theta2,params)
+#	r = np.linspace(0,1,101)
+#	t = np.linspace(0,1,101)
+#	
+#	plot_rays(r,t,phi1,phi2,theta1,theta2,params)
 	
 	return output
 
