@@ -14,22 +14,10 @@ import threading
 from px_2_xyz import px_2_xyz
 from Camera import Camera
 
-global x1
-global x2
-global y1
-global y2
-global global_cam
-
-global_cam = Camera("webcam", "webcam", 1.172)
-
 class coordinatePoint():
     def __init__(self, x, y):
         self.x = x
         self.y = y
-
-coordinate1 = coordinatePoint(0,0)
-coordinate2 = coordinatePoint(0,0)
-
 
 class camThread(threading.Thread):
     def __init__(self, previewName, camID):
@@ -161,18 +149,27 @@ def camTrack(previewName, camID):
     # close all windows
     cv2.destroyAllWindows()
 
+global global_cam
 
-thread1 = camThread("Camera 1", 0)
-thread2 = camThread("Camera 2", 1)
-thread1.start()
-time.sleep(1)
-thread2.start()
-time.sleep(1)
+global_cam = Camera("webcam", "webcam", 1.172)
+coordinate1 = coordinatePoint(0,0)
+coordinate2 = coordinatePoint(0,0)
 
+def main():
+    thread1 = camThread("Camera 1", 0)
+    thread2 = camThread("Camera 2", 1)
+    thread1.start()
+    time.sleep(1)
+    thread2.start()
+    time.sleep(1)
 
+    for i in range(1000):
+        coords = px_2_xyz(coordinate2.x, coordinate2.y, coordinate1.x, coordinate1.y, global_cam)
+        print(coords)
 
-for i in range(1000):
-    coords = px_2_xyz(coordinate2.x, coordinate2.y, coordinate1.x, coordinate1.y, global_cam)
-    time.sleep(.5)
-    #print("x1: %d y1: %d x2: %d y2: %d" % (coordinate1.x, coordinate1.y, coordinate2.x, coordinate2.y))
-    print(coords)
+        #print("x1: %d y1: %d x2: %d y2: %d" % (coordinate1.x, coordinate1.y, coordinate2.x, coordinate2.y))
+        
+        time.sleep(.5)
+
+if __name__ == "__main__":
+    main()

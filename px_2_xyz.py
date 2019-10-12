@@ -26,7 +26,7 @@ from scipy import optimize
 #    and each row represents one instant in time
     
 
-def px_2_xyz(x1,y1,x2,y2,cam):
+def px_2_xyz(x1,y1,x2,y2,cam,isPlotting=False):
 	
 	# Image Data:
 	camX1 = x1
@@ -68,11 +68,11 @@ def px_2_xyz(x1,y1,x2,y2,cam):
 	output = [result,error]
 	
 	#doing some plotting
-	
-#	r = np.linspace(0,1,101)
-#	t = np.linspace(0,1,101)
-#	
-#	plot_rays(r,t,phi1,phi2,theta1,theta2,params)
+	if (isPlotting == True):
+		r = np.linspace(0,1,101)
+		t = np.linspace(0,1,101)
+		
+		plot_rays(r,t,phi1,phi2,theta1,theta2,params)
 	
 	return output
 
@@ -82,5 +82,5 @@ camX2 = 548
 
 camY1 = 2261
 camY2 = 2262
-px_2_xyz(camX1,camY1,camX2,camY2,cam)
+px_2_xyz(camX1,camY1,camX2,camY2,cam,isPlotting=True)
 		
