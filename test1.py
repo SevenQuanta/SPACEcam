@@ -5,7 +5,6 @@ from mpl_toolkits.mplot3d import Axes3D
 
 # This is a test script using the phone camera.
 
-
 rad_per_px = 0.0004861
 resX = 4032
 resY = 3024
@@ -16,7 +15,6 @@ camX2 = 548
 
 camY1 = 2261
 camY2 = 2262
-
 
 pX1 = resX/2 - camX1
 pX2 = resX/2 - camX2

@@ -41,7 +41,7 @@ class camThread(threading.Thread):
         camTrack(self.previewName, self.camID)
 
 def camTrack(previewName, camID):
-        # construct the argument parse and parse the arguments
+    # construct the argument parse and parse the arguments
     ap = argparse.ArgumentParser()
     ap.add_argument("-v", "--video",
         help="path to the (optional) video file")
@@ -162,14 +162,17 @@ def camTrack(previewName, camID):
     cv2.destroyAllWindows()
 
 
-thread1 = camThread("Camera 1", 1)
-thread2 = camThread("Camera 2", 2)
+thread1 = camThread("Camera 1", 0)
+thread2 = camThread("Camera 2", 1)
 thread1.start()
+time.sleep(1)
 thread2.start()
+time.sleep(1)
 
 
-for i in range(100):
-    coords = px_2_xyz(coordinate1.x, coordinate1.y, coordinate2.x, coordinate2.y, global_cam)
-    time.sleep(.1)
-    #rint("x1: %d y1: %d x2: %d y2: %d" % (coordinate1.x, coordinate1.y, coordinate2.x, coordinate2.y))
-    print("x: %d y: %d z: %d" % (coords[0][0], coords[0][1], coords[0][2]) )
+
+for i in range(1000):
+    coords = px_2_xyz(coordinate2.x, coordinate2.y, coordinate1.x, coordinate1.y, global_cam)
+    time.sleep(.5)
+    #print("x1: %d y1: %d x2: %d y2: %d" % (coordinate1.x, coordinate1.y, coordinate2.x, coordinate2.y))
+    print(coords)
