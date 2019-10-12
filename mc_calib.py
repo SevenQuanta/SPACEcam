@@ -4,6 +4,13 @@ import numpy as np
 # and a ``camera'' object, and changes the camera object to update the 
 # calibration. The calibration data is made up of 
 
-def mc_calb(cam,data):
+def cost_function(params,calibData):
+	
+	x1 = calibData[0]
+		
+		
+
+def mc_calib(cam,data):
 	pass
 	
+
