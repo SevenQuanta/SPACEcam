@@ -76,11 +76,11 @@ def px_2_xyz(x1,y1,x2,y2,cam,isPlotting=False):
 	
 	return output
 
-cam = Camera('samsungs7','samsungs7',0.355)
-camX1 = 2621
-camX2 = 548
-
-camY1 = 2261
-camY2 = 2262
-px_2_xyz(camX1,camY1,camX2,camY2,cam,isPlotting=True)
+#cam = Camera('samsungs7','samsungs7',0.355)
+#camX1 = 2621
+#camX2 = 548
+#
+#camY1 = 2261
+#camY2 = 2262
+#px_2_xyz(camX1,camY1,camX2,camY2,cam,isPlotting=True)
 		
