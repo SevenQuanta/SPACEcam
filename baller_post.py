@@ -18,6 +18,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 import matplotlib.pyplot as plt
 from util import equal_plot
+import pandas as pd
 
 class coordinatePoint():
     def __init__(self, x, y):
@@ -174,7 +175,7 @@ coordinate2 = coordinatePoint(0,0)
 def main():
     # Collect events until released
     
-    N = 30
+    N = 101
 	
     path = np.zeros([3,N])
 	
@@ -193,24 +194,28 @@ def main():
         result = px_2_xyz(coordinate1.x, coordinate1.y, coordinate2.x, coordinate2.y, global_cam)
         coords = result[0]
 #        print(coordinate1.x)
-        print(coordinate2.x)
+#        print(coordinate2.x)
 #        print(coordinate1.y)
 #        print(coordinate2.y) 
-        print(result[1])
+        print(result[0])
         
-        time.sleep(0.5)
+        time.sleep(0.1)
         path[0,i] = coords[0,0]
         path[1,i] = coords[0,1]
         path[2,i] = coords[0,2]
+    csvpath = pd.DataFrame(path)
+    print(csvpath)
+    csvpath.to_csv('test')
 		
-#    fig = plt.figure()
-#    ax = fig.gca(projection='3d')
-#    equal_plot(path[0,:],path[1,:],path[2,:],ax)
-#    ax.set_xlabel('x')
-#    ax.set_ylabel('y')
-#    ax.set_zlabel('z')
-#    ax.scatter(0,0,0)
-#    ax.scatter(separation,0,0)
+    fig = plt.figure(1)
+    fig.clf()
+    ax = fig.gca(projection='3d')
+    equal_plot(path[0,:],path[1,:],path[2,:],ax)
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.set_zlabel('z')
+    ax.scatter(0,0,0)
+    ax.scatter(global_cam.s,0,0)
     
 
 if __name__ == "__main__":
