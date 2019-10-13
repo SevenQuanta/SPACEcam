@@ -45,6 +45,8 @@ def on_release(key):
         # Stop listener
         return False
 
+def (
+
 def camTrack(previewName, camID):
     # construct the argument parse and parse the arguments
     ap = argparse.ArgumentParser()

@@ -57,8 +57,8 @@ def calibration():
 
 	calibData = [calibData1,calibData2,calibData3,calibData4]
 	
-	param1 = np.linspace(0.001,0.003,31)
-	param2 = np.linspace(0.001,0.003,31)
+	param1 = np.linspace(0.0013,0.00136,31)
+	param2 = np.linspace(0.00124,0.00129,31)
 	
 	costMap = np.zeros([len(param1),len(param2)])
 	
