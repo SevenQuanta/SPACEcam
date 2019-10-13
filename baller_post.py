@@ -14,7 +14,10 @@ import threading
 from px_2_xyz import px_2_xyz
 from Camera import Camera
 from pynput.keyboard import Key, Listener
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm
 import matplotlib.pyplot as plt
+from util import equal_plot
 
 class coordinatePoint():
     def __init__(self, x, y):
@@ -164,7 +167,7 @@ def camTrack(previewName, camID):
 
 global global_cam
 
-global_cam = Camera("webcam", "webcam", 1.33)
+global_cam = Camera("hacknc")
 coordinate1 = coordinatePoint(0,0)
 coordinate2 = coordinatePoint(0,0)
 
@@ -176,12 +179,12 @@ def main():
     path = np.zeros([3,N])
 	
 	
-    thread1 = camThread("Camera 1", 0)        
-#    thread2 = camThread("Camera 2", 2)
+    thread1 = camThread("Camera 1", 1)        
+    thread2 = camThread("Camera 2", 2)
     thread1.start()
     time.sleep(1)
-#    thread2.start()
-    time.sleep(1)
+    thread2.start()
+    time.sleep(3)
 	
 #    with Listener(on_press=on_press,on_release=on_release) as listener:
 #        listener.join()
@@ -189,12 +192,26 @@ def main():
     for i in range(N):
         result = px_2_xyz(coordinate1.x, coordinate1.y, coordinate2.x, coordinate2.y, global_cam)
         coords = result[0]
-        print(coords)
+#        print(coordinate1.x)
+        print(coordinate2.x)
+#        print(coordinate1.y)
+#        print(coordinate2.y) 
+        print(result[1])
         
-        time.sleep(.5)
+        time.sleep(0.5)
         path[0,i] = coords[0,0]
         path[1,i] = coords[0,1]
         path[2,i] = coords[0,2]
+		
+#    fig = plt.figure()
+#    ax = fig.gca(projection='3d')
+#    equal_plot(path[0,:],path[1,:],path[2,:],ax)
+#    ax.set_xlabel('x')
+#    ax.set_ylabel('y')
+#    ax.set_zlabel('z')
+#    ax.scatter(0,0,0)
+#    ax.scatter(separation,0,0)
+    
 
 if __name__ == "__main__":
     main()

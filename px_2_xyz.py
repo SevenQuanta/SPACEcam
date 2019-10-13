@@ -26,7 +26,7 @@ from scipy import optimize
 #    and each row represents one instant in time
     
 
-def px_2_xyz(x1,y1,x2,y2,cam,isPlotting=False,phi_offset=0,theta_offset=0):
+def px_2_xyz(x1,y1,x2,y2,cam,isPlotting=False):
 	
 	# Image Data:
 	camX1 = x1
@@ -36,16 +36,16 @@ def px_2_xyz(x1,y1,x2,y2,cam,isPlotting=False,phi_offset=0,theta_offset=0):
 	camY2 = y2
 	
 	pX1 = cam.resX1/2 - camX1
-	pX2 = cam.resX2/2 - camX2
+	pX2 = cam.resX2/2 - camX2 + cam.x_offset
 	
 	pY1 = -cam.resY1/2 + camY1
-	pY2 = -cam.resY2/2 + camY2
+	pY2 = -cam.resY2/2 + camY2 - cam.z_offset
 	
 	phi1 = pX1*cam.rad_per_px1  + np.pi/2
-	phi2 = pX2*cam.rad_per_px2  + np.pi/2 + phi_offset
+	phi2 = pX2*cam.rad_per_px2  + np.pi/2
 	
 	theta1 = pY1*cam.rad_per_px1 + np.pi/2
-	theta2 = pY2*cam.rad_per_px2 + np.pi/2 + theta_offset
+	theta2 = pY2*cam.rad_per_px2 + np.pi/2
 	
 	r0 = 1
 	t0 = 1
@@ -66,9 +66,9 @@ def px_2_xyz(x1,y1,x2,y2,cam,isPlotting=False,phi_offset=0,theta_offset=0):
 	result = (pos1+pos2)/2 # take the average of the two estimated positions
 	
 	if (error > 0.1*np.linalg.norm(result)):
-		result[0,0] = np.nan
-		result[0,1] = np.nan
-		result[0,2] = np.nan
+		result[0,0] = 0
+		result[0,1] = 0
+		result[0,2] = 0
 	
 	output = [result,error]
 	
@@ -90,7 +90,7 @@ def testrun():
 	
 	camY1 = 2261
 	camY2 = 2262
-	px_2_xyz(camX1,camY1,camX2,camY2,cam,isPlotting=True,phi_offset=0.0,theta_offset=-0.0)
+	px_2_xyz(camX1,camY1,camX2,camY2,cam,isPlotting=True,x_offset=0.0,z_offset=-0.0)
 	
 #testrun()
 		

@@ -22,8 +22,8 @@ def cost_function(params,calibData):
 	rad_per_px1 = params[0]
 	rad_per_px2 = params[1]
 	s = params[2]
-	phi_offset = params[3]
-	theta_offset = params[4]
+	x_offset = params[3]
+	z_offset = params[4]
 	
 	cam = Camera('samsungs7','samsungs7',1)
 	
@@ -31,7 +31,7 @@ def cost_function(params,calibData):
 	cam.rad_per_px1 = rad_per_px1
 	cam.rad_per_px2 = rad_per_px2
 	
-	result = px_2_xyz(X1,Y1,X2,Y2,cam,phi_offset=phi_offset,theta_offset=theta_offset)
+	result = px_2_xyz(X1,Y1,X2,Y2,cam,x_offset=x_offset,z_offset=z_offset)
 	
 	pos_predicted = result[0]
 	

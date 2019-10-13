@@ -1,35 +1,27 @@
 import numpy as np
 
 class Camera():
-	def __init__(self,name1,name2,s):
+	def __init__(self,name):
 		
-		self.name1 = name1
-		self.name2 = name2
-		self.s = s
+		self.name = name
 		self.initialize()
-		self.theta_offset = 0
-		self.phi_offset = 0
+		
 		
 	def initialize(self):
 		
-		if (self.name1 == 'samsungs7'):
-			self.rad_per_px1 = 0.0004861
-			self.resX1 = 4032
-			self.resY1 = 3024
+		if (self.name == 'hacknc'):
+			self.rad_per_px1 = 0.00141
+			self.resX1 = 600
+			self.resY1 = 450
+			self.rad_per_px2 = 0.00141
+			self.resX2 = 600
+			self.resY2 = 450
+			self.z_offset = -5
+			self.x_offset = 0
+			self.s = 1.33
 			
-		if (self.name1 == 'webcam'):
-			self.rad_per_px1 = 0.00065449
-			self.resX1 = 1280
-			self.resY1 = 720
-			
-		if (self.name2 == 'samsungs7'):
-			self.rad_per_px2 = 0.0004861
-			self.resX2 = 4032
-			self.resY2 = 3024
-			
-		if (self.name2 == 'webcam'):
-			self.rad_per_px2 = 0.00065449
-			self.resX2 = 1280
-			self.resY2 = 720
+		else:
+			print('camera setup not found in database')
+
 		
 			

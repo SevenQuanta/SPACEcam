@@ -55,14 +55,9 @@ def rays(r,t,phi1,phi2,theta1,theta2,params):
 	
 	return rayR, rayT
 
-def plot_rays(r,t,phi1,phi2,theta1,theta2,params):
-	
-	fig = plt.figure()
-	ax = fig.gca(projection='3d')
-	
-	def equal_plot(X,Y,Z):
+def equal_plot(X,Y,Z,ax):
 
-		ax.plot(X,Y,Z)
+		ax.plot(X,Y,Z,'o-')
 		
 		max_range = np.array([X.max()-X.min(), Y.max()-Y.min(), Z.max()-Z.min()]).max()
 		Xb = 0.5*max_range*np.mgrid[-1:2:2,-1:2:2,-1:2:2][0].flatten() + 0.5*(X.max()+X.min())
@@ -71,18 +66,23 @@ def plot_rays(r,t,phi1,phi2,theta1,theta2,params):
 		# Comment or uncomment following both lines to test the fake bounding box:
 		for xb, yb, zb in zip(Xb, Yb, Zb):
 		   ax.plot([xb], [yb], [zb], 'w')
+
+def plot_rays(r,t,phi1,phi2,theta1,theta2,params):
+	
+	fig = plt.figure()
+	ax = fig.gca(projection='3d')
 	
 	rayR, rayT = rays(r,t,phi1,phi2,theta1,theta2,params)
 
 	X = rayR[:,0]
 	Y = rayR[:,1]
 	Z = rayR[:,2]
-	equal_plot(X,Y,Z)
+	equal_plot(X,Y,Z,ax)
 	
 	X = rayT[:,0]
 	Y = rayT[:,1]
 	Z = rayT[:,2]
-	equal_plot(X,Y,Z)
+	equal_plot(X,Y,Z,ax)
 	
 	return ax
 
