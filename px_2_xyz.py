@@ -66,9 +66,14 @@ def px_2_xyz(x1,y1,x2,y2,cam,isPlotting=False):
 	result = (pos1+pos2)/2 # take the average of the two estimated positions
 	
 	if (error > 0.1*np.linalg.norm(result)):
-		result[0,0] = 0
-		result[0,1] = 0
-		result[0,2] = 0
+		result[0,0] = np.nan
+		result[0,1] = np.nan
+		result[0,2] = np.nan
+		
+	if (result[0,1] < 0):
+		result[0,0] = np.nan
+		result[0,1] = np.nan
+		result[0,2] = np.nan
 	
 	output = [result,error]
 	

@@ -3,6 +3,9 @@ from px_2_xyz import px_2_xyz
 from Camera import Camera
 import scipy as sp
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm
+import matplotlib.pyplot as plt
 
 # This is the calibration script...it takes in some calibration data,
 # and a ``camera'' object, and changes the camera object to update the 

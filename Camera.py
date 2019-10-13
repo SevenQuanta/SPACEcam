@@ -10,10 +10,10 @@ class Camera():
 	def initialize(self):
 		
 		if (self.name == 'hacknc'):
-			self.rad_per_px1 = 0.00141
+			self.rad_per_px1 = 0.00135
 			self.resX1 = 600
 			self.resY1 = 450
-			self.rad_per_px2 = 0.00141
+			self.rad_per_px2 = 0.0013
 			self.resX2 = 600
 			self.resY2 = 450
 			self.z_offset = -5
