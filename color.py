@@ -30,7 +30,9 @@ class ArtCritic():
         peak = codes[index_max]
         colour = binascii.hexlify(bytearray(int(c) for c in peak)).decode('ascii')
         print('most frequent is %s (#%s)' % (peak, colour))
-        return colorsys.rgb_to_hsv(peak[0], peak[1], peak[2])
+        hsv = colorsys.rgb_to_hsv(peak[0], peak[1], peak[2])
+        hsv = (hsv[0] * 180, hsv[1] * 255, hsv[2])
+        return hsv
 
 def main():
     # img = Image.open("reference_image.jpg")
