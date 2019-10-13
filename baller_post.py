@@ -13,6 +13,8 @@ import time
 import threading
 from px_2_xyz import px_2_xyz
 from Camera import Camera
+from pynput.keyboard import Key, Listener
+import matplotlib.pyplot as plt
 
 class coordinatePoint():
     def __init__(self, x, y):
@@ -27,6 +29,17 @@ class camThread(threading.Thread):
     def run(self):
         print("Starting " + self.previewName)
         camTrack(self.previewName, self.camID)
+
+def on_press(key):
+    print('{0} pressed'.format(
+        key))
+
+def on_release(key):
+    print('{0} release'.format(
+        key))
+    if key == Key.esc:
+        # Stop listener
+        return False
 
 def camTrack(previewName, camID):
     # construct the argument parse and parse the arguments
@@ -151,25 +164,37 @@ def camTrack(previewName, camID):
 
 global global_cam
 
-global_cam = Camera("webcam", "webcam", 1.172)
+global_cam = Camera("webcam", "webcam", 1.33)
 coordinate1 = coordinatePoint(0,0)
 coordinate2 = coordinatePoint(0,0)
 
 def main():
-    thread1 = camThread("Camera 1", 1)
-    thread2 = camThread("Camera 2", 2)
+    # Collect events until released
+    
+    N = 30
+	
+    path = np.zeros([3,N])
+	
+	
+    thread1 = camThread("Camera 1", 0)        
+#    thread2 = camThread("Camera 2", 2)
     thread1.start()
     time.sleep(1)
-    thread2.start()
+#    thread2.start()
     time.sleep(1)
-
-    for i in range(1000):
-        coords = px_2_xyz(coordinate1.x, coordinate1.y, coordinate2.x, coordinate2.y, global_cam)
+	
+#    with Listener(on_press=on_press,on_release=on_release) as listener:
+#        listener.join()
+	
+    for i in range(N):
+        result = px_2_xyz(coordinate1.x, coordinate1.y, coordinate2.x, coordinate2.y, global_cam)
+        coords = result[0]
         print(coords)
-
-        #print("x1: %d y1: %d x2: %d y2: %d" % (coordinate1.x, coordinate1.y, coordinate2.x, coordinate2.y))
         
         time.sleep(.5)
+        path[0,i] = coords[0,0]
+        path[1,i] = coords[0,1]
+        path[2,i] = coords[0,2]
 
 if __name__ == "__main__":
     main()

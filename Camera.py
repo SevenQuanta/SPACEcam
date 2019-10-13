@@ -7,6 +7,8 @@ class Camera():
 		self.name2 = name2
 		self.s = s
 		self.initialize()
+		self.theta_offset = 0
+		self.phi_offset = 0
 		
 	def initialize(self):
 		
@@ -16,7 +18,7 @@ class Camera():
 			self.resY1 = 3024
 			
 		if (self.name1 == 'webcam'):
-			self.rad_per_px1 = 0.0014544
+			self.rad_per_px1 = 0.00065449
 			self.resX1 = 1280
 			self.resY1 = 720
 			
@@ -26,7 +28,7 @@ class Camera():
 			self.resY2 = 3024
 			
 		if (self.name2 == 'webcam'):
-			self.rad_per_px2 = 0.0014544
+			self.rad_per_px2 = 0.00065449
 			self.resX2 = 1280
 			self.resY2 = 720
 		
