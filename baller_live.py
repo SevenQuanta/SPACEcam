@@ -45,8 +45,6 @@ def on_release(key):
         # Stop listener
         return False
 
-def (
-
 def camTrack(previewName, camID):
     # construct the argument parse and parse the arguments
     ap = argparse.ArgumentParser()
@@ -59,8 +57,8 @@ def camTrack(previewName, camID):
     # define the lower and upper boundaries of the "green"
     # ball in the HSV color space, then initialize the
     # list of tracked points
-    greenLower = (150, 150, 150)
-    greenUpper = (255, 255, 255)
+    greenLower = (80, 80, 0)
+    greenUpper = (100, 255, 255)  
     pts = deque(maxlen=args["buffer"])
 
     # if a video path was not supplied, grab the reference
@@ -177,7 +175,7 @@ coordinate2 = coordinatePoint(0,0)
 def main():
     # Collect events until released
     
-    N = 300
+    N = 30000
 	
     path = np.zeros([3,N])
 	
@@ -202,7 +200,7 @@ def main():
 #        print(coordinate2.y) 
         print(result[0])
         
-        time.sleep(0.1)
+        time.sleep(0.05)
         path[0,i] = coords[0,0]
         path[1,i] = coords[0,1]
         path[2,i] = coords[0,2]
@@ -213,7 +211,7 @@ def main():
                 path[1,i] = path[1,i-1]
                 path[2,i] = path[2,i-1]
 		
-        if(i > 11):
+        if(i > 31):
             ax.clear()
             ax.plot(path[0,i-10:i+1],path[1,i-10:i+1],path[2,i-10:i+1])
             ax.scatter(path[0,i],path[1,i],path[2,i])
